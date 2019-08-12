@@ -18,16 +18,35 @@ public:
 	}
 
 	HRESULT decode() {
-		int hr=S_OK;
+		int hr = S_OK;
+
+		hr=LoadFile(L"Chessboard.png", board);
+		assert(SUCCEEDED(hr));
+		hr=LoadFile(L"ChessPiecesArray.png",pieces);
+		assert(SUCCEEDED(hr));
+		rendertarget->DrawBitmap(
+			board, //bitmap
+			D2D1::RectF(0.f, 0.f, board->GetSize.width, board->GetSize.height),
+			1.0f,//Opacity
+			D2D1_BITMAP_INTERPOLATION_MODE::D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+			D2D1::RectF(0.0f, 0.0f, board->GetSize().width, board->GetSize().height)
+		);
+
+		return hr;
+	}
+
+private:
+	int LoadFile(LPCWSTR name, ID2D1Bitmap* bmp) {
+		int hr = S_OK;
 		if (dfact == NULL) {
-			hr = CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER,IID_PPV_ARGS(&dfact));
+			hr = CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dfact));
 			assert(SUCCEEDED(hr));
 		}
 		else {
 			assert(FALSE);
 		}
 		if (reader == NULL) {
-			hr = dfact->CreateDecoderFromFilename(L"ChessBoard.png", NULL,GENERIC_READ,WICDecodeMetadataCacheOnLoad, &reader);
+			hr = dfact->CreateDecoderFromFilename(name, NULL, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &reader);
 			assert(SUCCEEDED(hr));
 		}
 		else {
@@ -47,9 +66,8 @@ public:
 			0.0,//transparency
 			WICBitmapPaletteTypeCustom);
 		assert(SUCCEEDED(hr));
-		hr = rendertarget->CreateBitmapFromWicBitmap(wicConverter,NULL,&board);
+		hr = rendertarget->CreateBitmapFromWicBitmap(wicConverter, NULL, &bmp);
 		assert(SUCCEEDED(hr));
-
 		return hr;
 	}
 };
