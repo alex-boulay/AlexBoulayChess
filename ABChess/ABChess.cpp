@@ -7,6 +7,7 @@
 
 
 #include <Windows.h>
+#include"ABChess.h"
 #include "ABChessBoard.h"
 
 // C RunTime Header Files:
@@ -52,60 +53,13 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 using namespace std;
 
-class ABChess {
-public:
-	ABChess();
-	~ABChess();
 
-	// Register the window class and call methods for instantiating drawing resources
-	HRESULT Initialize();
-
-	// Process and dispatch messages
-	void RunMessageLoop();
-
-private:
-
-	// Initialize device-independent resources.
-	HRESULT CreateDeviceIndependentResources();
-
-	// Initialize device-dependent resources.
-	HRESULT CreateDeviceResources();
-
-	// Release device-dependent resource.
-	void DiscardDeviceResources();
-
-	// Draw content.
-	HRESULT OnRender();
-
-	// Resize the render target.
-	void OnResize(
-		UINT width,
-		UINT height
-	);
-
-	// The windows procedure.
-	static LRESULT CALLBACK WndProc(
-		HWND hWnd,
-		UINT message,
-		WPARAM wParam,
-		LPARAM lParam
-	);
-
-public:
-	HWND m_hwnd;
-	ID2D1Factory* m_pDirect2dFactory;
-	ID2D1HwndRenderTarget* m_pRenderTarget;
-	ID2D1SolidColorBrush* m_pLightSlateGrayBrush;
-	ID2D1SolidColorBrush* m_pCornflowerBlueBrush;
-};
-
-ABChess::ABChess() :
-	m_hwnd(NULL),
-	m_pDirect2dFactory(NULL),
-	m_pRenderTarget(NULL),
-	m_pLightSlateGrayBrush(NULL),
-	m_pCornflowerBlueBrush(NULL)
-{
+ABChess::ABChess() :ABCDisplay() {
+	m_hwnd = NULL;
+	m_pDirect2dFactory=NULL;
+	m_pRenderTarget = NULL;
+	m_pLightSlateGrayBrush=NULL;
+	m_pCornflowerBlueBrush = NULL;
 }
 
 
@@ -247,24 +201,13 @@ HRESULT ABChess::CreateDeviceResources(){
 			D2D1::HwndRenderTargetProperties(m_hwnd, size),
 			&m_pRenderTarget
 		);
+		assert(SUCCEEDED(hr));
 
 
-		if (SUCCEEDED(hr))
-		{
-			// Create a gray brush.
-			hr = m_pRenderTarget->CreateSolidColorBrush(
-				D2D1::ColorF(D2D1::ColorF::LightSlateGray),
-				&m_pLightSlateGrayBrush
-			);
-		}
-		if (SUCCEEDED(hr))
-		{
-			// Create a blue brush.
-			hr = m_pRenderTarget->CreateSolidColorBrush(
-				D2D1::ColorF(D2D1::ColorF::CornflowerBlue),
-				&m_pCornflowerBlueBrush
-			);
-		}
+		setRdt(m_pRenderTarget);
+
+		decode();
+
 	}
 
 	return hr;
@@ -359,57 +302,17 @@ HRESULT ABChess::OnRender()
 	HRESULT hr = S_OK;
 
 	hr = CreateDeviceResources();
+
 	if (SUCCEEDED(hr))
 	{
 		m_pRenderTarget->BeginDraw();
 
 		m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
-		m_pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
-
 		D2D1_SIZE_F rtSize = m_pRenderTarget->GetSize();
+		
+		DrawBoard();
 
-		// Draw a grid background.
-		int width = static_cast<int>(rtSize.width);
-		int height = static_cast<int>(rtSize.height);
-
-		for (int x = 0; x < width; x += 10)
-		{
-			m_pRenderTarget->DrawLine(
-				D2D1::Point2F(static_cast<FLOAT>(x), 0.0f),
-				D2D1::Point2F(static_cast<FLOAT>(x), rtSize.height),
-				m_pLightSlateGrayBrush,
-				0.5f
-			);
-		}
-
-		for (int y = 0; y < height; y += 10)
-		{
-			m_pRenderTarget->DrawLine(
-				D2D1::Point2F(0.0f, static_cast<FLOAT>(y)),
-				D2D1::Point2F(rtSize.width, static_cast<FLOAT>(y)),
-				m_pLightSlateGrayBrush,
-				0.5f
-			);
-		}
-		// Draw two rectangles.
-		D2D1_RECT_F rectangle1 = D2D1::RectF(
-			rtSize.width / 2 - 50.0f,
-			rtSize.height / 2 - 50.0f,
-			rtSize.width / 2 + 50.0f,
-			rtSize.height / 2 + 50.0f
-		);
-
-		D2D1_RECT_F rectangle2 = D2D1::RectF(
-			rtSize.width / 2 - 100.0f,
-			rtSize.height / 2 - 100.0f,
-			rtSize.width / 2 + 100.0f,
-			rtSize.height / 2 + 100.0f
-		);
-		// Draw a filled rectangle.
-		m_pRenderTarget->FillRectangle(&rectangle1, m_pLightSlateGrayBrush);
-		// Draw the outline of a rectangle.
-		m_pRenderTarget->DrawRectangle(&rectangle2, m_pCornflowerBlueBrush);
 		hr = m_pRenderTarget->EndDraw();
 	}
 	if (hr == D2DERR_RECREATE_TARGET)

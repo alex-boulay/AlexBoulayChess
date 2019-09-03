@@ -163,14 +163,15 @@
     <ClCompile Include="ABPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ABCDisplay.h" />
     <ClInclude Include="ABChess.h" />
     <ClInclude Include="ABChessBoard.h" />
     <ClInclude Include="ABPiece.h" />
     <ClInclude Include="ABPlayer.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Pictures\ChessBoard.png" />
-    <Image Include="..\..\..\..\Pictures\ChessPiecesArray.png" />
+    <Image Include="ChessBoard.png" />
+    <Image Include="ChessPiecesArray.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

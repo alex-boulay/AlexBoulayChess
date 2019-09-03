@@ -44,12 +44,15 @@
     <ClInclude Include="ABPlayer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="ABCDisplay.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Pictures\ChessBoard.png">
+    <Image Include="ChessBoard.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
-    <Image Include="..\..\..\..\Pictures\ChessPiecesArray.png">
+    <Image Include="ChessPiecesArray.png">
       <Filter>Fichiers de ressources</Filter>
     </Image>
   </ItemGroup>
