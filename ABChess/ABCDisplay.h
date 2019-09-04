@@ -11,6 +11,8 @@ private:
 	IWICImagingFactory* dfact = NULL;
 	HRSRC imageResHandle = NULL;
 	ID2D1HwndRenderTarget* rendertarget;
+	IWICBitmapFrameDecode* wicFrame = NULL;
+	IWICFormatConverter* wicConverter = NULL;
 
 public:
 	ABCDisplay();

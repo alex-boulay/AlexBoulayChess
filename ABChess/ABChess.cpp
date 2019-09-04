@@ -123,7 +123,7 @@ HRESULT ABChess::Initialize()
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
 			static_cast<UINT>(640),
-			static_cast<UINT>(480),
+			static_cast<UINT>(640),
 			NULL,
 			NULL,
 			HINST_THISCOMPONENT,

@@ -24,9 +24,13 @@ HRESULT ABCDisplay::decode() {
 	int hr = S_OK;
 
 	hr = LoadFile(L"ChessBoard.png", board);
-	//assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr));
+	hr = rendertarget->CreateBitmapFromWicBitmap(wicConverter, NULL, &board);
+	assert(SUCCEEDED(hr));
 	hr = LoadFile(L"ChessPiecesArray.png", bpieces);
-	//assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr));
+	hr = rendertarget->CreateBitmapFromWicBitmap(wicConverter, NULL, &bpieces);
+	assert(SUCCEEDED(hr));
 
 	return hr;
 }
@@ -37,22 +41,12 @@ int ABCDisplay::LoadFile(LPCWSTR name, ID2D1Bitmap* bmp) {
 		hr = CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dfact));
 		assert(SUCCEEDED(hr));
 	}
-	else {
-		assert(FALSE);
-	}
 
-	if (reader == NULL) {
-		hr = dfact->CreateDecoderFromFilename(name, NULL, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &reader);
-		assert(SUCCEEDED(hr));
-	}
-	else {
-		assert(FALSE);
-	}
+	hr = dfact->CreateDecoderFromFilename(name, NULL, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &reader);
+	assert(SUCCEEDED(hr));
 
-	IWICBitmapFrameDecode* wicFrame = NULL;
 	hr = reader->GetFrame(0, &wicFrame);
 	assert(SUCCEEDED(hr));
-	IWICFormatConverter* wicConverter = NULL;
 	hr = dfact->CreateFormatConverter(&wicConverter);
 	assert(SUCCEEDED(hr));
 	hr = wicConverter->Initialize(wicFrame,
@@ -61,8 +55,6 @@ int ABCDisplay::LoadFile(LPCWSTR name, ID2D1Bitmap* bmp) {
 		NULL, //no palette needed
 		0.0,//transparency
 		WICBitmapPaletteTypeCustom);
-	assert(SUCCEEDED(hr));
-	hr = rendertarget->CreateBitmapFromWicBitmap(wicConverter, NULL, &bmp);
 	assert(SUCCEEDED(hr));
 	return hr;
 }
