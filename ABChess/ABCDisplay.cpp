@@ -3,6 +3,11 @@
 #include <assert.h>
 #include <d2d1.h>
 #include "ABCDisplay.h"
+#include <iostream>
+#include <string> 
+#include <sstream>
+
+using namespace std;
 
 template<class Interface>
 inline void SafeRelease(
@@ -31,7 +36,13 @@ HRESULT ABCDisplay::decode() {
 	assert(SUCCEEDED(hr));
 	hr = rendertarget->CreateBitmapFromWicBitmap(wicConverter, NULL, &bpieces);
 	assert(SUCCEEDED(hr));
-
+	stringstream buff;
+	buff << "taille board : " << board->GetPixelSize().width << " x " << board->GetPixelSize().height << endl;
+	buff << "taille bpieces : " << bpieces->GetPixelSize().width << " x " << bpieces->GetPixelSize().height << endl;
+	string s = buff.str();
+	wstring stemp = wstring(s.begin(), s.end());
+	LPCWSTR sw = stemp.c_str();
+	OutputDebugString(sw);
 	return hr;
 }
 
@@ -41,12 +52,19 @@ int ABCDisplay::LoadFile(LPCWSTR name, ID2D1Bitmap* bmp) {
 		hr = CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&dfact));
 		assert(SUCCEEDED(hr));
 	}
-
+	if (reader != NULL) {
+		reader->Release();
+	}
 	hr = dfact->CreateDecoderFromFilename(name, NULL, GENERIC_READ, WICDecodeMetadataCacheOnLoad, &reader);
 	assert(SUCCEEDED(hr));
-
+	if (wicFrame != NULL) {
+		wicFrame->Release();
+	}
 	hr = reader->GetFrame(0, &wicFrame);
 	assert(SUCCEEDED(hr));
+	if (wicConverter != NULL) {
+		wicFrame->Release();
+	}
 	hr = dfact->CreateFormatConverter(&wicConverter);
 	assert(SUCCEEDED(hr));
 	hr = wicConverter->Initialize(wicFrame,

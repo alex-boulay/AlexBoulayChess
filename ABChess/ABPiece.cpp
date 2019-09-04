@@ -1,9 +1,9 @@
 #include "ABPiece.h"
 #include "ABChess.h"
 
-unsigned char Names[7][7] = { "Empty", "Pawn", "Rook", "Knight", "Bishop", "Queen", "King" };
-unsigned char Colors[2][6] = { "White","Black" };
-unsigned char Values[7] = { 0,1,3,3,5,8 }; // theoretical piece values
+unsigned char Names[7][7] = {"Queen", "King","Rook","Knight","Bishop","Pawn","Empty" };
+unsigned char Colors[2][6] = { "Black","White" };
+unsigned char Values[7] = { 8,600,5,3,3,1,0 }; // theoretical piece values
 
 unsigned char * ABPiece::getPieceName() {
 	return Names[data & 7 -1];
