@@ -122,8 +122,8 @@ HRESULT ABChess::Initialize()
 			WS_OVERLAPPEDWINDOW,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
-			static_cast<UINT>(640),
-			static_cast<UINT>(640),
+			static_cast<UINT>(653),
+			static_cast<UINT>(659),
 			NULL,
 			NULL,
 			HINST_THISCOMPONENT,
@@ -312,6 +312,11 @@ HRESULT ABChess::OnRender()
 		D2D1_SIZE_F rtSize = m_pRenderTarget->GetSize();
 		
 		DrawBoard();
+		for (int i1 = 0; i1 < 8; i1++) {
+			for (int i2 = 0; i2 < 8; i2++) {
+				DrawPiece((i1+i2)%12, i1, i2);
+			}
+		}
 
 		hr = m_pRenderTarget->EndDraw();
 	}

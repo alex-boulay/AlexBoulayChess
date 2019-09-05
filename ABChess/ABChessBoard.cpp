@@ -18,7 +18,7 @@ void ABChessBoard::putPiece(ABplace place,ABpiece  piece){
 }
 
 
-ABcolor caseColor(ABplace place) {
+ABcolor ABChessBoard::caseColor(ABplace place) {
 	return ((place & 7)+((place >> 3)&7)) ;
 }
 

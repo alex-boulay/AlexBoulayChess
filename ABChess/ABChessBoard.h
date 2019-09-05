@@ -1,5 +1,5 @@
 #pragma once
-#include "ABChess.h"
+#include "ABPiece.h"
 
 class ABChessBoard{
 private:
@@ -11,5 +11,5 @@ public:
 	ABpiece getPiece(int x, int y); //get piece by coord
 	void clearPosition(ABplace);
 	void putPiece(ABplace place, ABpiece piece);
-	ABcolor caseColor(ABplace place) {};
+	ABcolor caseColor(ABplace place) ;
 };

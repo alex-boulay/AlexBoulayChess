@@ -3,7 +3,7 @@
 
 unsigned char Names[7][7] = {"Queen", "King","Rook","Knight","Bishop","Pawn","Empty" };
 unsigned char Colors[2][6] = { "Black","White" };
-unsigned char Values[7] = { 8,600,5,3,3,1,0 }; // theoretical piece values
+unsigned char Values[7] = { 8,250,5,3,3,1,0 }; // theoretical piece values
 
 unsigned char * ABPiece::getPieceName() {
 	return Names[data & 7 -1];

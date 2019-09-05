@@ -23,6 +23,8 @@ public:
 	//int DrawPiece(ABpiece piece, ABplace place);
 	//int splitpieces(ID2D1Bitmap* source, ID2D1Bitmap** dest, int nmbW, int nmbH); 
 	void DrawBoard();
+	void DrawPiece(ABpiece p, ABplace pl);
+	void DrawPiece(ABpiece p, int x, int y);
 private:
 	int LoadFile(LPCWSTR name, ID2D1Bitmap* bmp);// Load a file in the bitmap
 };

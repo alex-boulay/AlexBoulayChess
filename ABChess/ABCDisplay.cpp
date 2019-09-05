@@ -99,6 +99,24 @@ int ABCDisplay ::DrawPiece(ABpiece piece, ABplace place) {
 	return 0;
 }**/
 
+
+void ABCDisplay::DrawPiece(ABpiece pi,ABplace pl) { // Draw a piece unless it's an empty case on the board
+	DrawPiece(pi, pl >> 4, pl & 15);
+}
+
+void ABCDisplay::DrawPiece(ABpiece pi, int x, int y) { // Draw a piece unless it's an empty case on the board
+	if (((pi >> 2) & 15) == 7) return;
+	float placeWE = 53.0f + (73.f * x);
+	float placeHE = (70.f * y);
+	rendertarget->DrawBitmap(
+		bpieces,
+		D2D1::RectF(placeWE, placeHE, placeWE + 75.f, placeHE + 75.f),
+		1.0f,
+		D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+		D2D1::RectF(((pi >> 1) & 15) * 60.f, (pi & 1) * 60.f, ((pi >> 1) & 15) * 60.f + 60.f, (pi & 1) * 60.f + 60.f)
+	);
+}
+
 void ABCDisplay::DrawBoard() {
 	rendertarget->DrawBitmap(
 		board,
