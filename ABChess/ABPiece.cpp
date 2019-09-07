@@ -1,5 +1,4 @@
 #include "ABPiece.h"
-#include "ABChess.h"
 
 unsigned char Names[7][7] = {"Queen", "King","Rook","Knight","Bishop","Pawn","Empty" };
 unsigned char Colors[2][6] = { "Black","White" };

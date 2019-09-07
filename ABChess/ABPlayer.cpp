@@ -1,7 +1,8 @@
 #include "ABPlayer.h"
 
-ABPlayer::ABPlayer(ABcolor col) {
+ABPlayer::ABPlayer(ABcolor col,ABChessBoard* board) {
 	color = col;
+	board = board;
 	putPieces();
 };
 
@@ -30,8 +31,8 @@ void ABPlayer::putPieces() {
 	nmbr = 16;
 }
 
-ABWPlayer::ABWPlayer() : ABPlayer(WHITE) {
+ABWPlayer::ABWPlayer(ABChessBoard *board) : ABPlayer(WHITE,board) {
 };
 
-ABBPlayer::ABBPlayer() : ABPlayer(BLACK) {
+ABBPlayer::ABBPlayer(ABChessBoard * board) : ABPlayer(BLACK,board) {
 };

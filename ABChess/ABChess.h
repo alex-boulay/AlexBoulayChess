@@ -1,6 +1,21 @@
 #pragma once
 #include <iostream>
 #include "ABCDisplay.h"
+#include "ABChessBoard.h"
+#include "ABPlayer.h"
+#include <Windows.h>
+// C RunTime Header Files:
+#include <stdlib.h>
+#include <malloc.h>
+#include <memory.h>
+#include <wchar.h>
+#include <math.h>
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+#include <dwrite.h>
+#include <wincodec.h>
+
 using namespace std;
 
 class ABChess: public ABCDisplay {
@@ -48,5 +63,9 @@ public:
 	ID2D1HwndRenderTarget* m_pRenderTarget;
 	ID2D1SolidColorBrush* m_pLightSlateGrayBrush;
 	ID2D1SolidColorBrush* m_pCornflowerBlueBrush;
+
+	ABChessBoard board;
+	ABPlayer p1;
+	ABPlayer IA;
 };
 

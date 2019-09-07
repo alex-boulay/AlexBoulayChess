@@ -25,6 +25,8 @@ public:
 	void DrawBoard();
 	void DrawPiece(ABpiece p, ABplace pl);
 	void DrawPiece(ABpiece p, int x, int y);
+	void DrawChessBoard(ABChessBoard b);
+
 private:
 	int LoadFile(LPCWSTR name, ID2D1Bitmap* bmp);// Load a file in the bitmap
 };

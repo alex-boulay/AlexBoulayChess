@@ -4,23 +4,7 @@
 #pragma comment(lib, "d2d1")
 #endif
 
-
-
-#include <Windows.h>
 #include"ABChess.h"
-#include "ABChessBoard.h"
-
-// C RunTime Header Files:
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <wchar.h>
-#include <math.h>
-
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <wincodec.h>
 
 template<class Interface>
 inline void SafeRelease(
@@ -75,11 +59,14 @@ ABChess::~ABChess()
 void ABChess::RunMessageLoop()
 {
 	MSG msg;
+	msg.message = WM_NULL;
 
-	while (GetMessage(&msg, NULL, 0, 0))
+	while (msg.message!=WM_QUIT)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 	}
 }
 
@@ -311,12 +298,7 @@ HRESULT ABChess::OnRender()
 
 		D2D1_SIZE_F rtSize = m_pRenderTarget->GetSize();
 		
-		DrawBoard();
-		for (int i1 = 0; i1 < 8; i1++) {
-			for (int i2 = 0; i2 < 8; i2++) {
-				DrawPiece((i1+i2)%12, i1, i2);
-			}
-		}
+		DrawChessBoard(board);
 
 		hr = m_pRenderTarget->EndDraw();
 	}

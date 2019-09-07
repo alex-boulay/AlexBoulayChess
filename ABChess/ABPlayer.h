@@ -1,15 +1,16 @@
 #pragma once
-#include "ABChess.h"
 #include "ABPiece.h"
+#include "ABChessBoard.h"
 
 //general player
 class ABPlayer {
 protected:
+	ABChessBoard *board;
 	ABcolor color;//BLACK or WHITE
 	ABPiece* Pieces[16] ; //all the pieces owned by the player
 	char nmbr = 0;//nmbr of pieces
 public:
-	ABPlayer(ABcolor col);
+	ABPlayer(ABcolor col,ABChessBoard* board);
 	void putPieces();
 	ABcolor getColor() { return color; }
 	ABcolor ennemiColor();
@@ -19,11 +20,11 @@ public:
 //white player
 class ABWPlayer:ABPlayer {
 public:
-	ABWPlayer();
+	ABWPlayer(ABChessBoard * board);
 };
 
 // black player
 class ABBPlayer : ABPlayer {
 public:
-	ABBPlayer();
+	ABBPlayer(ABChessBoard* board);
 };
