@@ -15,7 +15,7 @@
 #define WHITE 1
 
 using ABplace = unsigned char;//place is 0-3bits column 4-7bits row
-using ABpiece = unsigned char;//piece is a 0-3bit piece 0-2 is the type of piece 4 is the color
+using ABpiece = unsigned char;//piece is a bit 0 colot bit 1-3 value
 using ABcolor = unsigned char;// bit 0 BLACK or WHITE, if used as a pointer  point to a strign "BACK" or "WHITE"
 using ABvalue = unsigned char;// Theoretical value of the piece
 using namespace std;
@@ -32,7 +32,7 @@ struct ABPieceCreationException : public std::exception
 class ABPiece {
 private:
 	ABplace place;
-	ABpiece data;// bit 0-2 type of piece 3 color
+	ABpiece data;// bit 0 color bit 1-3 value
 public:
 	unsigned char* getPieceName();
 	ABcolor* getPieceColor();

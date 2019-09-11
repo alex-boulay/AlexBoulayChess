@@ -23,6 +23,6 @@ ABPiece::ABPiece(ABpiece piece, char x, char y,ABcolor c) {
 	if (piece > 16) {
 		throw ABPieceCreationException();
 	}
-	data = piece+(c<<3);
-	place = x+(y<<4);
+	data = c+(piece<<1);
+	place = y+(x<<4);
 };

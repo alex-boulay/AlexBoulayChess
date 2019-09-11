@@ -2,6 +2,12 @@
 #include <wincodec.h>
 #include <assert.h>
 #include <d2d1.h>
+#include <iostream>
+#include <string> 
+#include <sstream>
+#include <wincodec.h>
+#include <assert.h>
+#include <d2d1.h>
 #include "ABChessBoard.h"
 
 class ABCDisplay {

@@ -147,6 +147,11 @@ int CALLBACK WinMain(
 	{
 		{
 			ABChess app;
+			app.board = new ABChessBoard();
+			app.Wp = new ABWPlayer(app.board);
+			app.Bp = new ABBPlayer(app.board);
+			app.Wp->putPieces();
+			app.Bp->putPieces();
 
 			if (SUCCEEDED(app.Initialize()))
 			{
@@ -265,6 +270,21 @@ LRESULT CALLBACK ABChess::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM
 			wasHandled = true;
 			break;
 
+			case WM_LBUTTONDOWN:
+			{
+				UINT xPos = GET_X_LPARAM(lParam);
+				UINT yPos = GET_Y_LPARAM(lParam);
+
+				stringstream buff;
+				buff << "Click X value:  : " << xPos << " x "  << endl;
+				buff << "Click Y value : " << yPos  << " y "  << endl;
+				string s = buff.str();
+				wstring stemp = wstring(s.begin(), s.end());
+				LPCWSTR sw = stemp.c_str();
+				OutputDebugString(sw);
+
+			}
+			break;
 			case WM_DESTROY:
 			{
 				PostQuitMessage(0);
@@ -298,7 +318,7 @@ HRESULT ABChess::OnRender()
 
 		D2D1_SIZE_F rtSize = m_pRenderTarget->GetSize();
 		
-		DrawChessBoard(board);
+		DrawChessBoard(*board);
 
 		hr = m_pRenderTarget->EndDraw();
 	}

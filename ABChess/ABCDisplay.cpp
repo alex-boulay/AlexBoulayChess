@@ -1,11 +1,7 @@
 #pragma once
-#include <wincodec.h>
-#include <assert.h>
-#include <d2d1.h>
+
 #include "ABCDisplay.h"
-#include <iostream>
-#include <string> 
-#include <sstream>
+
 
 using namespace std;
 
@@ -105,9 +101,9 @@ void ABCDisplay::DrawPiece(ABpiece pi,ABplace pl) { // Draw a piece unless it's 
 }
 
 void ABCDisplay::DrawPiece(ABpiece pi, int x, int y) { // Draw a piece unless it's an empty case on the board
-	if (((pi >> 2) & 15) >= 7) return;
+	if (pi >=13) return;
 	float placeWE = 53.0f + (73.f * x);
-	float placeHE = (70.f * y);
+	float placeHE = (70.f * (7-y));
 	rendertarget->DrawBitmap(
 		bpieces,
 		D2D1::RectF(placeWE, placeHE, placeWE + 75.f, placeHE + 75.f),

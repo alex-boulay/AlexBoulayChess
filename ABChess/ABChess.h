@@ -4,6 +4,7 @@
 #include "ABChessBoard.h"
 #include "ABPlayer.h"
 #include <Windows.h>
+#include <Windowsx.h>
 // C RunTime Header Files:
 #include <stdlib.h>
 #include <malloc.h>
@@ -11,6 +12,9 @@
 #include <wchar.h>
 #include <math.h>
 
+#include <iostream>
+#include <string> 
+#include <sstream>
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <dwrite.h>
@@ -64,8 +68,8 @@ public:
 	ID2D1SolidColorBrush* m_pLightSlateGrayBrush;
 	ID2D1SolidColorBrush* m_pCornflowerBlueBrush;
 
-	ABChessBoard board;
-	ABPlayer p1;
-	ABPlayer IA;
+	ABChessBoard* board;
+	ABWPlayer* Wp;
+	ABBPlayer* Bp;
 };
 

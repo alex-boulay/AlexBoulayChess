@@ -18,13 +18,13 @@ public:
 
 
 //white player
-class ABWPlayer:ABPlayer {
+class ABWPlayer:public ABPlayer {
 public:
 	ABWPlayer(ABChessBoard * board);
 };
 
 // black player
-class ABBPlayer : ABPlayer {
+class ABBPlayer :public ABPlayer {
 public:
 	ABBPlayer(ABChessBoard* board);
 };
